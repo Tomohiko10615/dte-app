@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html>
+    <style>
+        body{
+            background: rgb(255,255,255);
+            background: radial-gradient(circle, rgba(255,255,255,1) 75%, rgba(200,200,200,1) 100%); 
+            font-family: 'KoHo', sans-serif !important;
+        }
+
+        .alert-info{
+            text-align: left !important;
+            width: 500px !important;
+        }
+        .container{
+            margin: 50px;
+            border-radius: 3%;
+            height: auto;
+            display: flex;
+            justify-content: center;
+            flex-direction: column;
+            width: 500px !important;
+            padding: 30px;
+            align-items: center;
+            
+        }
+
+        #box_shadow{
+            background: #F8F8F8; 
+            border: solid #BDBDBD 1px; 
+            box-shadow: 5px 5px 20px rgba(0, 0, 0, 0.5)  ; 
+            -webkit-box-shadow: 5px 5px 20px rgba(0, 0, 0, 0.5); 
+            -moz-box-shadow: 5px 5px 20px rgba(0, 0, 0, 0.5);
+        }
+
+        .child_container{
+            height: auto;
+            display: flex;
+            flex-direction: row;
+            width: 400px;
+        }
+
+        .child{
+            width: 400px;
+            height: 50px;
+            margin: auto;
+        }
+
+        input{
+            width: 100% !important;
+            font-family: 'KoHo', sans-serif !important;
+            
+        }
+
+        input[type=date]{
+            text-align: center;
+        }
+
+        select{
+            width: 100%;
+            height: 30px;
+            font-family: 'KoHo', sans-serif;
+        }
+
+        h4{
+            text-align: center;
+        }
+
+        .alert{
+            text-align: center;
+            padding: 10px !important;
+            margin: auto !important;
+            width: 100%;
+            margin-top: 20px !important;
+        }
+
+        .child_button{
+            width: 100%;
+            margin: 10px;
+            text-align: center;
+        }
+
+        #close_button{
+            background-color: transparent;
+            background: transparent;
+            width: auto !important;
+        }
+
+        button, #search{
+            width: 160px;
+
+	background:linear-gradient(to bottom, #f9f9f9 5%, #e9e9e9 100%);
+	background-color:#f9f9f9;
+	border-radius:6px;
+	border:1px solid #dcdcdc;
+	display:inline-block;
+	cursor:pointer;
+	color:#666666;
+	font-family:Arial;
+	font-size:15px;
+	font-weight:bold;
+	padding:6px 24px;
+	text-decoration:none;
+	text-shadow:0px 1px 0px #ffffff;
+
+        }
+
+button:hover, #search:hover {
+	background:linear-gradient(to bottom, #e9e9e9 5%, #f9f9f9 100%);
+	background-color:#e9e9e9;
+}
+
+button:disabled{
+    cursor: not-allowed;
+    color: #c2c2c2;
+}
+
+    </style>
+    <body>
+        <head>
+            <title>DTE</title>
+            <link rel="preconnect" href="https://fonts.gstatic.com">
+            <link rel="preconnect" href="https://fonts.gstatic.com">
+            <link href="https://fonts.googleapis.com/css2?family=KoHo:wght@200;400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.0.0/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+        </head>
+        <header>
+            {% if not done %}
+            <div class="alert alert-info" role="alert">
+                <button type="button" class="close" id="close_button" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                <h4 class="alert-heading">Welcome</h4>
+                
+                <p>Hi, this is the live preview for my DTE project. This web API fetchs the file related to a particular document. All fields must match properly or the file won't be retrieved.
+                    In order to see it in action you should add some test cases first. Please log in into the admin page with the following credentials:</p>
+                <hr>
+                <p class="mb-0">
+                    <ul>
+                        <li>Username: guest</li>
+                        <li>Password: guestpassword</li>
+                    </ul>
+                Under the request menu, add a new entry by clicking '+Add'. Then fill all fields and click 'Save'. If you wish, you can add some more entries. That's all, now you can go back to this page, have a happy testing!
+                </p>
+                
+
+
+              </div>
+              {% endif %}
+            </header>
+              <main>
+            <div class="container" id="box_shadow">
+                <form id=myform action="{% url 'fetch' %}" method="get">
+                    {% csrf_token %}
+                    <div class="child"><h4>CONSULTA DE DOCUMENTOS</h4></div>
+                    <div class="child_container">
+                        <div class="child"><label for="tipo">Tipo de Documento</label></div>
+                        
+                        <div class="child"><select id="tipo" name="documentos">
+                            <option value="factura">Factura Electrónica</option>
+                            <option value="boleta">Boleta de Venta Electrónica</option>
+                            <option value="notacredito">Nota de Crédito Electrónica</option>
+                            <option value="notadebito">Nota de Débito Electrónica</option>
+                            <option value="comprobante">Comprobante de Retención</option>
+                        </select></div>
+                        
+                    </div>
+                    <div class="child_container">
+                        <div class="child"><label for="serie">Serie</label></div>
+                        <div class="child"><input type="text" id="serie" name="serie" minlength=4 maxlength=4></div>
+                    </div>
+                    <div class="child_container">
+                        <div class="child"><label for="correlativo">Correlativo</label></div>
+                        <div class="child"><input type="text" id="correlativo" name="correlativo" minlength=6 maxlength=6></div>
+                    </div>
+    
+                    <div class="child_container">
+                        <div class="child"><label for="fecha">Fecha</label></div>
+                        <div class="child" style="text-align: right;"><input type="date" id="fecha" name="fecha" required></div>
+                    </div> 
+                    <div class="child_container">
+                        <div class="child"><label for="monto">Monto</label></div>
+                        <div class="child"><input type="number" id="monto" name="monto" min="0" step=".01" required></div>
+                    </div>
+                    <div class="child_container">
+                        <div class="child" style="text-align: center;"><input type="submit" value="Buscar" id="search"></div>
+                    </div>
+    
+                </form>
+                
+                
+                <script>
+                    const form = document.getElementById('myform')
+                        form.reset();
+                </script>
+                <form id=serve action="{% url 'serve' %}" method=get>
+                    {% csrf_token %}
+                    <div class="child_container">
+                    
+                        <div class="child_button">
+                            <button type="submit" name="view" value="{{ file_path }}" target="_blank" disabled>Ver documento</button>
+                        </div>
+                            
+                        <div class="child_button">
+                            <button type="submit" name="download" value="{{ file_path }}" disabled>Descargar</button>
+                        </div>
+                    
+                    </div>
+
+            </form>
+                        {% if not_found %}
+                            <div class="alert alert-danger" role="alert">
+                                No existen coincidencias
+                            </div>
+                    {% elif found %}
+                        <div class="alert alert-success" role="alert">
+                            Recuperado con éxito
+                        </div>
+                    {% else %}
+                        <div class="alert alert-primary" role="alert">
+                            Llena todos los campos
+                        </div>
+                    {% endif %}
+                {% if file_path %}
+                    <script>
+                        const buttons = document.querySelectorAll("button");
+                        for (i in buttons){
+                            buttons[i].disabled = false;
+                        }
+                    </script>
+                {% endif %}
+                
+            </div>
+        
+        
+        </main>
+    </body>
+</html>
