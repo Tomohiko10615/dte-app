@@ -7,8 +7,8 @@ Para verlo en acción, primero se debe agregar algunos casos de prueba en la pá
      
 Inicie sesión con las siguientes credenciales:
 
-     Nombre de usuario: guest
-     Contraseña: guestpassword
+     Username: guest
+     Password: guestpassword
 
 En el menú request, agregue una nueva entrada haciendo clic en '+Add'.
 Luego, complete todos los campos y haga clic en 'Save'.
